@@ -1,0 +1,3 @@
+This program iterates through all the 100 comments availabe on https://jsonplaceholder.typicode.com/comments?postId=# (where # is the number of post from 1 to 100), reaches to the posts on this website https://jsonplaceholder.typicode.com/posts?userId=7, sets a connection to the database and records all those posts and comments to the database simultaniously.
+
+There are two screenshots of the database with the recorded posts and comments. 
