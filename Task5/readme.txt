@@ -1,0 +1,1 @@
+This program iterates throug all the 100 posts availabe on https://jsonplaceholder.typicode.com/posts/# (where # is the number of post from 1 to 100) and prints them into the terminal. 
