@@ -12,8 +12,6 @@ import (
 	"sync"
 	"time"
 
-	//_ "github.com/go-sql-driver/mysql"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -43,7 +41,6 @@ type Comment struct {
 }
 
 type dbConnection struct {
-	//gorm.Model
 	DB    *gorm.DB
 	sqlDB *gorm.DB
 	Close *gorm.DB
@@ -51,9 +48,9 @@ type dbConnection struct {
 
 // NewConnection opens connection to DB and returns it
 func NewDBConnection() (*dbConnection, error) {
-	dsn := "rk-mod:greatDayJA2021rk@tcp(127.0.0.1:3306)/comments"
+	dsn := "***:***@tcp(127.0.0.1:3306)/comments"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	//var sqlDB, _ = db.DB()
+
 	if err != nil {
 		panic("failed to connect to the database")
 	}
@@ -64,20 +61,7 @@ func NewDBConnection() (*dbConnection, error) {
 // records posts into the database
 func (sqlDB *dbConnection) setPostIntoDB(post Post) error {
 	posts := Post{UserId: post.UserId, Title: post.Title, Body: post.Body}
-	/*result := */ sqlDB.DB.Create(&posts)
-	/*posts.Num
-	result.Error
-	result.RowsAffected*/
-	//gorm.Model(&Post).Updates(post{UserId: ?, Title: "?", Body: "?"})
-	//stmt, err := db.DB.Prepare("insert into posts(user_Id, title, body) values (?, ?, ?)")
-	/*if err != nil {
-		return err
-	}*/
-
-	/*_, err = stmt.Exec(post.UserId, post.Title, post.Body)
-	if err != nil {
-		return err
-	}*/
+	sqlDB.DB.Create(&posts)
 
 	return nil
 }
@@ -85,20 +69,7 @@ func (sqlDB *dbConnection) setPostIntoDB(post Post) error {
 // records comments into the database
 func (sqlDB *dbConnection) setCommentIntoDB(comment Comment) error {
 	comments := Comment{PostId: comment.PostId, Id: comment.Id, Name: comment.Name, Email: comment.Email, Body: comment.Body}
-	/*result := */ sqlDB.DB.Create(&comments)
-	/*comments.Num
-	result.Error
-	result.RowsAffected*/
-	//gorm.Model(&comment).Updates(comments)
-	//stmt, err := db.DB.Prepare("insert into comments(post_Id, id, name, email, body) values (?, ?, ?, ?, ?)")
-	/*if err != nil {
-		return err
-	}*/
-
-	/*_, err = stmt.Exec(comment.PostId, comment.Id, comment.Name, comment.Email, comment.Body)
-	if err != nil {
-		return err
-	}*/
+	sqlDB.DB.Create(&comments)
 
 	return nil
 }
@@ -110,8 +81,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to connection to DB: error: %s", err.Error())
 	}
-
-	//defer sqlDB.Close() //db.DB.Close()
 
 	dbURL := url.URL{
 		Scheme:   "https",
